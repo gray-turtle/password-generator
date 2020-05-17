@@ -1,6 +1,10 @@
 // Assignment code here
 
 var length = 0;
+var lowercase = false;
+var uppercase = false;
+var numeric = false;
+var special = false;
 
 //prompt for criteria
 
@@ -18,9 +22,25 @@ function passwordLength() {
     passwordLength();
   }
 }
+
 //character types
 function characterType() {
-  console.log(length);
+  if (window.confirm("Include lowercase letters?")) {
+    lowercase = true;
+  }
+
+  if (window.confirm("Include uppercase letters?")) {
+    uppercase = true;
+  }
+
+  if (window.confirm("Include numbers?")) {
+    numeric = true;
+  }
+
+  if (window.confirm("Include Special Characters")) {
+    special = true;
+  }
+
 }
 //generate password
 
