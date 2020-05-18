@@ -1,6 +1,6 @@
 // Assignment code here
 
-var length = 0;
+var chosenLength = 0;
 var lowercase = false;
 var uppercase = false;
 var numeric = false;
@@ -10,9 +10,9 @@ var special = false;
 
 //password length
 function passwordLength() {
-  length = window.prompt("Enter a password length between 8 and 128 characters")
+  chosenLength = window.prompt("Enter a password length between 8 and 128 characters")
 
-  if (length >= 8 && length <= 128) {
+  if (chosenLength >= 8 && chosenLength <= 128) {
     characterType();
   } else {
     window.alert("Please enter a valid number!");
@@ -55,30 +55,27 @@ function generatePassword() {
   var uppercase_string = lowercase_string.toUpperCase();
   var numeric_string = "0123456789";
   var special_string = "!#%')+-/;=?[]_{}";
+  var final_string = ""
   var current_pass = "";
 
-  for (i = 0; i < length; i++) {
+  if (lowercase === true) {
+    final_string += lowercase_string;
+  }
 
-    var rand = Math.floor(Math.random() * 4);
+  if (uppercase === true) {
+    final_string += uppercase_string;
+  }
 
-    switch (rand) {
-      case 0:
-        current_pass += lowercase_string.charAt(Math.floor(Math.random() * lowercase_string.length));
-      
-        break;
-      case 1:
-        current_pass += uppercase_string.charAt(Math.floor(Math.random() * uppercase_string.length));
-      
-        break;
-      case 2:
-        current_pass += numeric_string.charAt(Math.floor(Math.random() * numeric_string.length));
-      
-        break;
-      case 3:
-        current_pass += special_string.charAt(Math.floor(Math.random() * special_string.length));
+  if (numeric === true) {
+    final_string += numeric_string;
+  }
 
-        break;
-    }
+  if (special === true) {
+    final_string += special_string;
+  }
+
+  for (i = 0; i < chosenLength; i++) {
+    current_pass += final_string.charAt(Math.floor(Math.random() * final_string.length));
   }
 
   console.log(current_pass);
