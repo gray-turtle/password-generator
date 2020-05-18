@@ -5,7 +5,7 @@ A website that generates a password based on user parameters.
 
 ## Screenshot
 
-![password generator](password.png)
+![password generator](./password.png)
 
 ## Built With
 * HTML
