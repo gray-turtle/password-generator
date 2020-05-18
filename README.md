@@ -1,11 +1,11 @@
 # Password Generator Starter Code
 
-## Purpose
+## Description
 A website that generates a password based on user parameters.
 
 ## Screenshot
 
-![password generator](./password.png)
+![password generator](./password_gen.png)
 
 ## Built With
 * HTML
