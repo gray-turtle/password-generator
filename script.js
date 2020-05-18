@@ -55,8 +55,14 @@ function generatePassword() {
   var uppercase_string = lowercase_string.toUpperCase();
   var numeric_string = "0123456789";
   var special_string = "!#%')+-/;=?[]_{}";
-  var final_string = ""
+  var final_string = "";
+  
   var current_pass = "";
+  
+  var lowercase_check = false;
+  var uppercase_check = false;
+  var numeric_check = false;
+  var special_check = false;
 
   if (lowercase === true) {
     final_string += lowercase_string;
@@ -80,6 +86,37 @@ function generatePassword() {
 
   console.log(current_pass);
 
+  for (i = 0; i < chosenLength; i++) {
+    if (lowercase_string.includes(final_string.charAt(i))) {
+      lowercase_check = true;
+    } else if (uppercase_string.includes(final_string.charAt(i))) {
+      uppercase_check = true;
+    } else if (numeric_string.includes(final_string.charAt(i))) {
+      numeric_check = true;
+    } else {
+      symbol_check = true;
+    }
+  }
+
+  if (lowercase === true) {
+    if (lowercase_check != true) {
+      generatePassword();
+    }
+  } else if (uppercase === true) {
+    if (uppercase_check != true) {
+      generatePassword();
+    }
+  } else if (numeric === true) {
+    if (numeric_check != true) {
+      generatePassword();
+    }
+  } else if (Symbol === true) {
+    if (symbol_check != true) {
+      generatePassword();
+    }
+  } else {
+    return(current_pass);
+  }
 }
 
 passwordLength();
