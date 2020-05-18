@@ -6,6 +6,12 @@ var uppercase = false;
 var numeric = false;
 var special = false;
 
+var lowercase_string = "abcdefghijklmnopqrstuvwxyz";
+var uppercase_string = lowercase_string.toUpperCase();
+var numeric_string = "0123456789";
+var special_string = "!#%')+-/;=?[]_{}";
+
+
 //prompt for criteria
 
 //password length
@@ -23,6 +29,12 @@ function passwordLength() {
 
 //character types
 function characterType() {
+
+  lowercase = false;
+  uppercase = false;
+  numeric = false;
+  special = false;
+
   if (window.confirm("Include lowercase letters?")) {
     lowercase = true;
   }
@@ -40,7 +52,7 @@ function characterType() {
   }
 
   if (uppercase === true || lowercase === true || numeric === true || special === true) {
-    generatePassword();
+    return;
   } else {
     window.alert("You must select at least one option!");
 
@@ -51,19 +63,10 @@ function characterType() {
 //generate password
 
 function generatePassword() {
-  var lowercase_string = "abcdefghijklmnopqrstuvwxyz";
-  var uppercase_string = lowercase_string.toUpperCase();
-  var numeric_string = "0123456789";
-  var special_string = "!#%')+-/;=?[]_{}";
+  var pass_being_generated = "";
+
   var final_string = "";
   
-  var current_pass = "";
-  
-  var lowercase_check = false;
-  var uppercase_check = false;
-  var numeric_check = false;
-  var special_check = false;
-
   if (lowercase === true) {
     final_string += lowercase_string;
   }
@@ -81,52 +84,92 @@ function generatePassword() {
   }
 
   for (i = 0; i < chosenLength; i++) {
-    current_pass += final_string.charAt(Math.floor(Math.random() * final_string.length));
+    pass_being_generated += final_string.charAt(Math.floor(Math.random() * final_string.length));
   }
 
-  console.log(current_pass);
+  console.log("unchecked password " + pass_being_generated);
+
+  return(pass_being_generated);
+}
+
+function checkPassword(pass_to_check) {
+  var lowercase_check = false;
+  var uppercase_check = false;
+  var numeric_check = false;
+  var special_check = false;
 
   for (i = 0; i < chosenLength; i++) {
-    if (lowercase_string.includes(final_string.charAt(i))) {
+    var is_lowercase = lowercase_string.includes(pass_to_check.charAt(i));  
+    var is_uppercase = uppercase_string.includes(pass_to_check.charAt(i));
+    var is_numeric = numeric_string.includes(pass_to_check.charAt(i));
+
+    if (is_lowercase === true) {
       lowercase_check = true;
-    } else if (uppercase_string.includes(final_string.charAt(i))) {
+      console.log("lowercase_check is " + lowercase_check);
+    } else if (is_uppercase === true) {
       uppercase_check = true;
-    } else if (numeric_string.includes(final_string.charAt(i))) {
+      console.log("uppercase_check is " + uppercase_check);
+    } else if (is_numeric === true) {
       numeric_check = true;
+      console.log("numeric_check is " + numeric_check);
     } else {
-      symbol_check = true;
+      special_check = true;
+      console.log("special_check is " + special_check);
     }
   }
 
   if (lowercase === true) {
+    console.log("lowercase selected");
     if (lowercase_check != true) {
-      generatePassword();
-    }
-  } else if (uppercase === true) {
+      console.log("no lowercase detected");
+      return(false);
+    } 
+  } 
+  
+  if (uppercase === true) {
+    console.log("uppercase selected");
     if (uppercase_check != true) {
-      generatePassword();
+      console.log("no uppercase detected");
+      return(false);
     }
-  } else if (numeric === true) {
-    if (numeric_check != true) {
-      generatePassword();
-    }
-  } else if (Symbol === true) {
-    if (symbol_check != true) {
-      generatePassword();
-    }
-  } else {
-    return(current_pass);
   }
+  
+  if (numeric === true) {
+    console.log("numeric selected");
+    if (numeric_check != true) {
+      console.log("no numeric detected");
+      return(false);
+    }
+  }
+  
+  if (special === true) {
+    console.log("special selected");
+    if (special_check != true) {
+      console.log("no special detected");
+      return(false);
+    }
+  }
+  
+  console.log("completed pass " + pass_to_check);
+  return(true);
 }
-
-passwordLength();
 
 // Get references to the #generate element
 var generateBtn = document.querySelector("#generate");
 
 // Write password to the #password input
 function writePassword() {
-  var password = generatePassword();
+  passwordLength();
+  var password_to_check = generatePassword();
+  // if our password is doesn't pass checks
+  while (checkPassword(password_to_check) != true) {
+    // regenerate
+    console.log("regenerating because password to check (" + password_to_check + ") failed.");
+    password_to_check = generatePassword();
+  }
+  //var checked_password = checkPassword(password_to_check)
+  var password = password_to_check;
+  console.log(password);
   var passwordText = document.querySelector("#password");
 
   passwordText.value = password;
